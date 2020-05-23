@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 import ArticleDetailModal from '../components/ArticleDetailModal';
 import { fetchArticles } from '../actions';
 
-const ArticleListPage = props => {
+const ArticleListPage = (props) => {
   const [modal, setModal] = useState(false);
   const [currentArticle, setCurrentArticle] = useState({});
 
-  const readArticle = article => {
+  const readArticle = (article) => {
     setCurrentArticle(article);
     setModal(true);
   };
@@ -22,7 +22,7 @@ const ArticleListPage = props => {
   };
 
   const renderArticles = () => {
-    return props.articles.map(article => (
+    return props.articles.map((article) => (
       <div className="col s12 m6 l6 xl4" key={article.title}>
         <div className="card large">
           <div className="card-image">
@@ -32,17 +32,14 @@ const ArticleListPage = props => {
             <span className="card-title">{article.title}</span>
           </div>
           <div className="card-action">
-            <a href="javascript:void(0)" onClick={() => readArticle(article)}>
-              Read More
-            </a>
+            <a onClick={() => readArticle(article)}>Read More</a>
           </div>
         </div>
       </div>
     ));
   };
-
   const { articles, location, match } = props;
-
+  // console.log(props);
   const category = props && articles[0] && articles[0].source.name;
 
   const head = () => {
@@ -87,9 +84,9 @@ const ArticleListPage = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    articles: state.articles
+    articles: state.articles,
   };
 };
 
@@ -103,20 +100,17 @@ ArticleListPage.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.any),
   location: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any),
-  fetchArticles: PropTypes.func
+  fetchArticles: PropTypes.func,
 };
 
 ArticleListPage.defaultProps = {
   articles: [],
   location: null,
   match: null,
-  fetchArticles: null
+  fetchArticles: null,
 };
 
 export default {
-  component: connect(
-    mapStateToProps,
-    { fetchArticles }
-  )(ArticleListPage),
-  loadData
+  component: connect(mapStateToProps, { fetchArticles })(ArticleListPage),
+  loadData,
 };

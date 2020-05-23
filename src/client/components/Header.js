@@ -11,7 +11,7 @@ const Header = () => {
   const toggleMenu = () => setMenuToggle(!menuOpen);
 
   const stylesOpen = {
-    transform: 'translateX(0px)'
+    transform: 'translateX(0px)',
   };
   return (
     <div className="navbar-fixed">
@@ -21,7 +21,7 @@ const Header = () => {
             <a href="/" className="brand-logo">
               SSR News
             </a>
-            <a href="javascript:void(0)" onClick={toggleMenu} className="sidenav-trigger right">
+            <a onClick={toggleMenu} className="sidenav-trigger right">
               <i className="material-icons">menu</i>
             </a>
             <div

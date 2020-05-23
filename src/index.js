@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import '@babel/polyfill';
 import express from 'express';
 import React from 'react';
@@ -18,7 +17,7 @@ function shouldCompress(req, res) {
 app.use(
   compression({
     level: 2, // set compression level from 1 to 9 (6 by default)
-    filter: shouldCompress // set predicate to determine whether to compress
+    filter: shouldCompress, // set predicate to determine whether to compress
   })
 );
 
@@ -36,14 +35,14 @@ app.get('*', (req, res) => {
 
   // Checks the given path, matches with component and returns array of items about to be rendered
   const routes = matchRoutes(Routes, req.path);
-
+  console.log(routes);
   // Execute all loadData functions inside given urls and wrap promises with new promises to be able to render pages all the time
   // Even if we get an error while loading data, we will still attempt to render page.
   const promises = routes
     .map(({ route }) => {
       return route.loadData ? route.loadData(store, id) : null;
     })
-    .map(promise => {
+    .map((promise) => {
       if (promise) {
         return new Promise((resolve, reject) => {
           promise.then(resolve).catch(resolve);
@@ -56,7 +55,6 @@ app.get('*', (req, res) => {
   Promise.all(promises).then(() => {
     const context = {};
     const content = renderer(req, store, context);
-
     if (context.notFound) {
       res.status(404);
     }
